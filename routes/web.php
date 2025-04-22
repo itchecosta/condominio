@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AppointmentGroupController;
+use App\Http\Controllers\AppointmentMemberController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +24,12 @@ Route::middleware('auth')->group(function () {
     Route::middleware('admin')->group(function () {
         Route::resource('users', UserController::class);
     });
+
+    Route::resource('appointment-groups', AppointmentGroupController::class);
+    // Rota para adicionar membro em grupo específico
+    Route::post('appointment-groups/{appointmentGroup}/members', 
+                [AppointmentMemberController::class,'store'])
+         ->name('appointment-groups.members.store');
 });
 
 
